@@ -1,14 +1,20 @@
 import { useState } from "react"
 import { motion, useReducedMotion } from "framer-motion"
 
-// ─── Images (замініть посилання на свої) ────────────────────────────
-const IMG_HERO   = "/hero.jpg"   // motherboard photo (hero)
-const IMG_CARD_1 = "/card1.jpg"  // blue PCB with chips (GNSS antennas)
-const IMG_CARD_2 = "/card2.jpg"  // 3D printer with red/pink light
-const IMG_CARD_3 = "/card3.jpg"  // dark engineering workshop
-const IMG_RD     = "/rd.jpg"     // macro PCB traces gold contacts (R&D)
-const LOGO_URL   = "/logo.png"   // set your logo URL here, or leave empty for text logo
+import heroImg from "./hero.jpg"
+import card1Img from "./card1.jpg"
+import card2Img from "./card2.jpg"
+import card3Img from "./card3.jpg"
+import rdImg from "./rd.jpg"
+import logoImg from "./logo.png"
 
+// ─── Images ─────────────────────────────────────────────────────────
+const IMG_HERO   = heroImg
+const IMG_CARD_1 = card1Img
+const IMG_CARD_2 = card2Img
+const IMG_CARD_3 = card3Img
+const IMG_RD     = rdImg
+const LOGO_URL   = logoImg
 // ─── Logo SVG (OS mark) ────────────────────────────────────────────
 function OsLogo({ size = 32 }: { size?: number }) {
   return (

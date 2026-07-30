@@ -11,8 +11,7 @@
 
 import * as React from "react"
 import { motion, useReducedMotion } from "framer-motion"
-import { addPropertyControls, ControlType } from "framer"
-
+import { addPropertyControls, ControlType } from "framer-motion"
 /**
  * OLEMAX SYSTEMS — Homepage (Hero + Ключові рішення)
  *

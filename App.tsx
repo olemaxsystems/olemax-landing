@@ -334,7 +334,7 @@ export default function App() {
 
                             {formSubmitted ? (
                                 <div style={{ padding: "20px", backgroundColor: "rgba(16, 185, 129, 0.1)", border: "1px solid #10B981", borderRadius: "6px", color: "#10B981", fontWeight: 600 }}>
-                                    Дякуємо! Дякуємо за звернення. Наш інженер зв'яжеться з вами найближчим часом.
+                                    Дякуємо за звернення! Наш інженер зв'яжеться з вами найближчим часом.
                                 </div>
                             ) : (
                                 <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -402,7 +402,7 @@ export default function App() {
                             )}
                         </div>
                     </div>
-                </header>
+                </section>
 
                 <footer style={{ marginTop: "80px", paddingTop: "32px", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: "13px", color: "#64748B" }}>
                     <div>© {new Date().getFullYear()} OLEMAX SYSTEMS. Всі права захищено.</div>

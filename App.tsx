@@ -15,6 +15,7 @@ const IMG_CARD_2 = card2Img
 const IMG_CARD_3 = card3Img
 const IMG_RD     = rdImg
 const LOGO_URL   = logoImg
+
 // ─── Logo SVG (OS mark) ────────────────────────────────────────────
 function OsLogo({ size = 32 }: { size?: number }) {
   return (
@@ -61,6 +62,66 @@ function CornerBracket({ corner }: { corner: "tl" | "tr" | "bl" | "br" }) {
       style={{ position: "absolute", ...position, transform: `rotate(${rotation}deg)` }}>
       <path d="M1 9 L1 1 L9 1" stroke="#3D7FFF" strokeWidth="1.6" fill="none" strokeLinecap="round" />
     </svg>
+  )
+}
+
+// ─── Hero OS Badge (animated circle with OS logo inside) ──────────
+function HeroOsBadge({ reduced }: { reduced: boolean | null }) {
+  return (
+    <motion.div
+      aria-hidden
+      style={{
+        position: "absolute",
+        top: "50%",
+        left: "50%",
+        transform: "translate(-50%, -50%)",
+        zIndex: 10,
+        width: 96,
+        height: 96,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+      }}
+    >
+      {/* Outer spinning ring */}
+      <motion.div
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          border: "1.5px solid rgba(61,127,255,0.5)",
+          borderTopColor: "rgba(61,127,255,0.12)",
+        }}
+        animate={reduced ? {} : { rotate: 360 }}
+        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+      />
+      {/* Inner pulsing circle with OS logo */}
+      <motion.div
+        style={{
+          width: 74,
+          height: 74,
+          borderRadius: "50%",
+          background: "rgba(11,12,14,0.82)",
+          backdropFilter: "blur(12px)",
+          border: "1px solid rgba(255,255,255,0.18)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          boxShadow: "0 0 24px rgba(61,127,255,0.25)",
+        }}
+        animate={reduced ? {} : {
+          boxShadow: [
+            "0 0 18px rgba(61,127,255,0.2)",
+            "0 0 36px rgba(61,127,255,0.45)",
+            "0 0 18px rgba(61,127,255,0.2)",
+          ],
+          scale: [1, 1.04, 1],
+        }}
+        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+      >
+        <OsLogo size={36} />
+      </motion.div>
+    </motion.div>
   )
 }
 
@@ -348,6 +409,14 @@ a { text-decoration: none; color: inherit; }
 }
 .olx-nav-link:hover { color: #F3F4F6; }
 
+/* ── Logo plaque ── */
+.olx-logo-plaque {
+  width: 40px; height: 40px; border-radius: 12px;
+  background: #ffffff; display: flex; align-items: center; justify-content: center;
+  overflow: hidden; flex-shrink: 0;
+}
+.olx-logo-plaque img { width: 28px; height: 28px; object-fit: contain; display: block; }
+
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 `
 
@@ -366,19 +435,37 @@ export default function App() {
         <div className="olx-section">
           <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between",
               height: 68 }}>
-            {/* Logo */}
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              {LOGO_URL
-                ? <img src={LOGO_URL} alt="OLEMAX SYSTEMS" style={{ height: 30, width: "auto" }} />
-                : <>
-                    <OsLogo size={30} />
-                    <span className="olx-display" style={{ fontWeight: 700, fontSize: 16,
-                        letterSpacing: ".02em" }}>
-                      OLEMAX SYSTEMS
-                    </span>
-                  </>
-              }
-            </div>
+
+            {/* ── Logo with hover wobble animation ── */}
+            <motion.div
+              style={{ display: "flex", alignItems: "center", gap: 10, cursor: "default" }}
+              whileHover={reduced ? {} : {
+                rotate: [0, -4, 4, -2, 0],
+                scale: 1.05,
+                transition: { duration: 0.5, ease: "easeInOut" },
+              }}
+            >
+              {/* White rounded plaque */}
+              <div className="olx-logo-plaque">
+                {LOGO_URL
+                  ? <img src={LOGO_URL} alt="OS" />
+                  : <OsLogo size={24} />
+                }
+              </div>
+              {/* Wordmark */}
+              <span
+                className="olx-display"
+                style={{
+                  fontWeight: 700,
+                  fontSize: 15,
+                  letterSpacing: ".06em",
+                  textTransform: "uppercase",
+                  color: "#F3F4F6",
+                }}
+              >
+                OLEMAX SYSTEMS
+              </span>
+            </motion.div>
 
             {/* Nav */}
             <nav style={{ display: "flex", alignItems: "center", gap: 32 }}>
@@ -458,7 +545,7 @@ export default function App() {
                 animate={reduced ? {} : { opacity: [.45, .75, .45], scale: [1, 1.06, 1] }}
                 transition={{ duration: 7, repeat: Infinity, ease: "easeInOut" }} />
 
-              {/* Image + brackets */}
+              {/* Image + brackets + animated OS badge */}
               <div style={{ position: "relative", padding: 16 }}>
                 <motion.div
                   animate={reduced ? {} : { y: [0, -10, 0] }}
@@ -467,6 +554,9 @@ export default function App() {
                   <img src={IMG_HERO} alt="OLEMAX SYSTEMS hardware"
                     style={{ width: "100%", height: "auto", display: "block",
                       borderRadius: 18, border: "1px solid rgba(255,255,255,.09)" }} />
+
+                  {/* ── Animated OS Badge in the centre of the hero image ── */}
+                  <HeroOsBadge reduced={reduced} />
                 </motion.div>
 
                 {/* Corner brackets */}

@@ -24,7 +24,7 @@ import { addPropertyControls, ControlType } from "framer"
 // Допоміжні функції та іконки
 // ------------------------------------------------------------
 
-function getImageSrc(image: any): string | undefined {
+function getImageSrc(image) {
     if (!image) return undefined
     if (typeof image === "string") return image
     if (typeof image === "object" && image.src) return image.src

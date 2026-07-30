@@ -119,9 +119,12 @@ function HeroOsBadge({ reduced }: { reduced: boolean | null }) {
         }}
         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
       >
-        <OsLogo size={36} />
+        {LOGO_URL ? (
+          <img src={LOGO_URL} alt="OS" style={{ width: 36, height: 36, objectFit: "contain" }} />
+        ) : (
+          <OsLogo size={36} />
+        )}
       </motion.div>
-    </motion.div>
   )
 }
 

@@ -8,6 +8,7 @@ const IMG_CARD_2 = "/card2.jpg"  // 3D printer with red/pink light
 const IMG_CARD_3 = "/card3.jpg"  // dark engineering workshop
 const IMG_RD     = "/rd.jpg"     // macro PCB traces gold contacts (R&D)
 const LOGO_URL   = "/logo.png"   // set your logo URL here, or leave empty for text logo
+
 // ─── Logo SVG (OS mark) ────────────────────────────────────────────
 function OsLogo({ size = 32 }: { size?: number }) {
   return (

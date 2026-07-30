@@ -1,24 +1,12 @@
 import * as React from "react"
-import { motion, useReducedMotion } from "framer-motion"
+import { motion, useReducedMotion, AnimatePresence } from "framer-motion"
 
 const NOISE_BG =
     'url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22300%22 height=%22300%22%3E%3Cfilter id=%22n%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.85%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23n)%22/%3E%3C/svg%3E")'
 
-function TargetMark({
-    size = 24,
-    color = "currentColor",
-}: {
-    size?: number
-    color?: string
-}) {
+function TargetMark({ size = 24, color = "currentColor" }: { size?: number; color?: string }) {
     return (
-        <svg
-            width={size}
-            height={size}
-            viewBox="0 0 24 24"
-            fill="none"
-            style={{ flexShrink: 0, display: "block" }}
-        >
+        <svg width={size} height={size} viewBox="0 0 24 24" fill="none" style={{ flexShrink: 0, display: "block" }}>
             <circle cx="12" cy="12" r="8.5" stroke={color} strokeWidth="1.2" />
             <line x1="12" y1="0.5" x2="12" y2="4.5" stroke={color} strokeWidth="1.2" />
             <line x1="12" y1="19.5" x2="12" y2="23.5" stroke={color} strokeWidth="1.2" />
@@ -31,13 +19,7 @@ function TargetMark({
 
 function ArrowIcon({ size = 15 }: { size?: number }) {
     return (
-        <svg
-            width={size}
-            height={size}
-            viewBox="0 0 16 16"
-            fill="none"
-            style={{ flexShrink: 0, display: "block" }}
-        >
+        <svg width={size} height={size} viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, display: "block" }}>
             <path d="M3.5 8H12.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" />
             <path d="M8.5 3.5L13 8L8.5 12.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -65,246 +47,349 @@ function CornerBracket({ corner }: { corner: "tl" | "tr" | "bl" | "br" }) {
                 transform: `rotate(${rotation}deg)`,
             }}
         >
-            <path
-                d="M1 9 L1 1 L9 1"
-                stroke="var(--olx-signal)"
-                strokeWidth="1.6"
-                fill="none"
-                strokeLinecap="round"
-            />
+            <path d="M1 9 L1 1 L9 1" stroke="var(--olx-signal)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
         </svg>
     )
 }
 
 const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-const staggerContainer = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
-}
-
-const staggerItem = {
-    hidden: { opacity: 0, y: 26 },
-    show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: easeOut } },
-}
-
-const bracketContainer = {
-    hidden: {},
-    show: { transition: { staggerChildren: 0.08, delayChildren: 0.55 } },
-}
-
-const bracketItem = {
-    hidden: { opacity: 0, scale: 1.4 },
-    show: {
-        opacity: 1,
-        scale: 1,
-        transition: { duration: 0.5, ease: easeOut },
+const content = {
+    UA: {
+        nav: { solutions: "Рішення", contact: "Контакти" },
+        hero: {
+            eyebrow: "ІННОВАЦІЇ В GNSS ТА РАДІОЕЛЕКТРОНІЦІ",
+            titleStart: "Точність, яка",
+            titleAccent: "не залежить від перешкод",
+            sub: "Ми розробляємо GNSS-антени та радіочастотні системи, які зберігають стабільний сигнал навіть у найскладніших умовах. Обладнання, якому довіряють в авіації, обороні та промисловості.",
+            btn1: "Переглянути рішення",
+            btn2: "Зв’язатися з нами",
+            lock: "СИГНАЛ ЗАФІКСОВАНО · RTK ТОЧНІСТЬ",
+        },
+        solutions: {
+            eyebrow: "НАШІ РІШЕННЯ",
+            title: "Що ми створюємо",
+            sub: "Від антен до готових радіочастотних систем — кожен продукт ми проєктуємо так, щоб він працював бездоганно навіть тоді, коли умови далекі від ідеальних.",
+            items: [
+                {
+                    title: "GNSS-антени преміум-класу",
+                    desc: "Багаточастотні антени з підтримкою GPS, GLONASS, Galileo та BeiDou. Корпус витримує будь-яку погоду, а точність не падає навіть за складних умов прийому сигналу.",
+                    img: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+                },
+                {
+                    title: "Радіочастотні системи для авіації та оборони",
+                    desc: "Плати та модулі, спроєктовані за найвищими стандартами надійності — для задач, де ціна помилки надто висока, а стабільність сигналу критична.",
+                    img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=800&auto=format&fit=crop",
+                },
+                {
+                    title: "Індивідуальні інженерні рішення",
+                    desc: "Проєктуємо форм-фактор і конфігурацію під конкретне завдання клієнта — від першого ескізу до серійного виробництва.",
+                    img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
+                },
+            ],
+            cta: "Маєте нестандартну задачу або проєкт, що вимагає особливої точності?",
+            ctaBtn: "Обговорити проєкт",
+        },
+        contactSection: {
+            title: "Зв'яжіться з нашими інженерами",
+            sub: "Ми готові обговорити технічне завдання, підібрати компоненти або спроєктувати рішення під ваші вимоги.",
+            formName: "Ваше ім'я або назва компанії",
+            formEmail: "Email або Telegram / телефон",
+            formDesc: "Короткий опис задачі або технічні вимоги",
+            submit: "Надіслати запит",
+            success: "Дякуємо! Наш інженер зв'яжеться з вами найближчим часом.",
+        },
+    },
+    EN: {
+        nav: { solutions: "Solutions", contact: "Contact" },
+        hero: {
+            eyebrow: "INNOVATIONS IN GNSS & RADIO ELECTRONICS",
+            titleStart: "Precision that",
+            titleAccent: "defies interference",
+            sub: "We engineer high-performance GNSS antennas and RF systems designed to maintain rock-solid signal lock in the most demanding environments. Trusted in aviation, defense, and industry.",
+            btn1: "Explore Solutions",
+            btn2: "Contact Us",
+            lock: "SIGNAL LOCKED · RTK PRECISION",
+        },
+        solutions: {
+            eyebrow: "OUR SOLUTIONS",
+            title: "What we build",
+            sub: "From specialized antennas to complete RF sub-systems — every product is engineered for flawless performance when conditions are far from ideal.",
+            items: [
+                {
+                    title: "Premium GNSS Antennas",
+                    desc: "Multi-frequency antennas supporting GPS, GLONASS, Galileo, and BeiDou. Ruggedized weatherproof enclosures ensure stable precision even under severe signal obstruction.",
+                    img: "https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=800&auto=format&fit=crop",
+                },
+                {
+                    title: "RF Systems for Aviation & Defense",
+                    desc: "Custom boards and RF modules built to the highest reliability standards — designed for mission-critical applications where signal stability is paramount.",
+                    img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=800&auto=format&fit=crop",
+                },
+                {
+                    title: "Custom Engineering & R&D",
+                    desc: "We design custom form-factors and RF architectures tailored to your exact specifications — from initial schematics to full-scale series production.",
+                    img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
+                },
+            ],
+            cta: "Have a custom challenge or project requiring extreme precision?",
+            ctaBtn: "Discuss Project",
+        },
+        contactSection: {
+            title: "Connect with our engineers",
+            sub: "We are ready to discuss your technical requirements, select RF components, or design a custom solution for your needs.",
+            formName: "Your name or company",
+            formEmail: "Email or Telegram / Phone",
+            formDesc: "Brief description of the task or technical requirements",
+            submit: "Send Inquiry",
+            success: "Thank you! Our engineer will contact you shortly.",
+        },
     },
 }
 
 export default function OlemaxHomepage() {
-    const accentColor = "#3D7FFF"
-    const showNoiseTexture = true
+    const [lang, setLang] = React.useState<"UA" | "EN">("UA")
+    const [formSubmitted, setFormSubmitted] = React.useState(false)
     const shouldReduceMotion = useReducedMotion()
+
+    const t = content[lang]
 
     return (
         <div
             className="olx-root"
-            style={
-                {
-                    position: "relative",
-                    width: "100%",
-                    backgroundColor: "#0B0C0E",
-                    color: "#F3F4F6",
-                    fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
-                    overflow: "hidden",
-                    "--olx-signal": accentColor,
-                    "--olx-steel": "#8B909A",
-                    "--olx-hairline": "rgba(255,255,255,0.09)",
-                    "--olx-surface": "#111317",
-                } as React.CSSProperties
-            }
+            style={{
+                position: "relative",
+                width: "100%",
+                minHeight: "100vh",
+                backgroundColor: "#0B0C0E",
+                color: "#F3F4F6",
+                fontFamily: "'Inter', -apple-system, BlinkMacSystemFont, sans-serif",
+                overflowX: "hidden",
+                "--olx-signal": "#3D7FFF",
+                "--olx-steel": "#8B909A",
+                "--olx-hairline": "rgba(255,255,255,0.09)",
+                "--olx-surface": "#111317",
+            } as React.CSSProperties}
         >
             <style>{`
                 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
-                .olx-root * , .olx-root *::before, .olx-root *::after { box-sizing: border-box; }
-                .olx-root a { text-decoration: none; color: inherit; }
-                .olx-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
-                .olx-mono { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
+                * { box-sizing: border-box; }
+                a { text-decoration: none; color: inherit; }
+                .olx-display { font-family: 'Space Grotesk', sans-serif; }
+                .olx-mono { font-family: 'IBM Plex Mono', monospace; }
                 .olx-eyebrow {
                     display: inline-flex; align-items: center; gap: 8px;
-                    font-family: 'IBM Plex Mono', ui-monospace, monospace;
-                    font-size: 12px; font-weight: 500; letter-spacing: 0.14em;
-                    text-transform: uppercase; color: var(--olx-signal);
-                    margin: 0 0 20px;
+                    font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+                    font-weight: 500; letter-spacing: 0.14em;
+                    text-transform: uppercase; color: var(--olx-signal); margin: 0 0 20px;
                 }
                 .olx-grid { display: grid; grid-template-columns: 1fr 0.82fr; gap: 60px; align-items: center; }
                 @media (max-width: 940px) { .olx-grid { grid-template-columns: 1fr; gap: 52px; } }
-                .olx-badge-row { display: flex; flex-wrap: wrap; gap: 10px; }
                 .olx-badge {
-                    font-family: 'IBM Plex Mono', ui-monospace, monospace;
-                    font-size: 11.5px; font-weight: 500; color: var(--olx-steel);
-                    padding: 7px 13px; border-radius: 100px; letter-spacing: 0.03em;
-                    border: 1px solid var(--olx-hairline); background: rgba(255,255,255,0.03);
+                    font-family: 'IBM Plex Mono', monospace; font-size: 11.5px;
+                    font-weight: 500; color: var(--olx-steel); padding: 7px 13px;
+                    border-radius: 100px; border: 1px solid var(--olx-hairline);
+                    background: rgba(255,255,255,0.03);
                 }
                 .olx-btn-primary, .olx-btn-secondary {
                     display: inline-flex; align-items: center; gap: 8px;
-                    font-family: 'Space Grotesk', sans-serif;
-                    font-size: 15px; font-weight: 600; padding: 14px 26px;
-                    border-radius: 10px; cursor: pointer; border: 1px solid transparent;
-                    transition: transform .25s ease, box-shadow .25s ease, filter .25s ease, background .25s ease, border-color .25s ease;
+                    font-family: 'Space Grotesk', sans-serif; font-size: 15px;
+                    font-weight: 600; padding: 14px 26px; border-radius: 10px;
+                    cursor: pointer; border: 1px solid transparent;
+                    transition: all .25s ease;
                 }
                 .olx-btn-primary { background: var(--olx-signal); color: #08090b; }
-                .olx-btn-primary:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 12px 28px color-mix(in srgb, var(--olx-signal) 35%, transparent); }
-                .olx-btn-primary svg { transition: transform .25s ease; }
-                .olx-btn-primary:hover svg { transform: translateX(3px); }
+                .olx-btn-primary:hover { transform: translateY(-2px); filter: brightness(1.08); box-shadow: 0 12px 28px rgba(61,127,255,0.35); }
                 .olx-btn-secondary { background: transparent; color: #F3F4F6; border-color: var(--olx-hairline); }
-                .olx-btn-secondary:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.28); transform: translateY(-2px); }
-                .olx-lock-readout { display: flex; align-items: center; gap: 9px; margin-top: 20px; }
-                .olx-lock-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--olx-signal); display: inline-block; flex-shrink: 0; }
-                .olx-lock-text { font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px; letter-spacing: 0.05em; color: var(--olx-steel); }
-                .olx-solutions-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-                @media (max-width: 940px) { .olx-solutions-grid { grid-template-columns: 1fr; } }
+                .olx-btn-secondary:hover { background: rgba(255,255,255,0.06); transform: translateY(-2px); }
                 .olx-card {
                     display: block; background: var(--olx-surface); border: 1px solid var(--olx-hairline);
-                    border-radius: 18px; overflow: hidden;
-                    transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
+                    border-radius: 18px; overflow: hidden; transition: all .3s ease;
                 }
-                .olx-card:hover { border-color: color-mix(in srgb, var(--olx-signal) 45%, transparent); box-shadow: 0 22px 44px rgba(0,0,0,0.45); transform: translateY(-4px); }
-                .olx-card-image-wrap { position: relative; aspect-ratio: 4 / 3; overflow: hidden; background: #0A0A0C; }
-                .olx-card-image-wrap img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
-                .olx-card:hover .olx-card-image-wrap img { transform: scale(1.07); }
-                .olx-card-link {
-                    display: inline-flex; align-items: center; gap: 6px; color: var(--olx-signal);
-                    font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; font-weight: 500;
-                    margin-top: 4px; letter-spacing: 0.02em;
+                .olx-card:hover { border-color: rgba(61,127,255,0.45); transform: translateY(-4px); box-shadow: 0 22px 44px rgba(0,0,0,0.45); }
+                .olx-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+                .olx-card:hover img { transform: scale(1.07); }
+                .lang-btn {
+                    background: none; border: none; font-family: 'IBM Plex Mono', monospace;
+                    font-size: 13px; font-weight: 600; cursor: pointer; padding: 6px 10px;
+                    border-radius: 6px; transition: all 0.2s;
                 }
+                .lang-btn.active { background: var(--olx-signal); color: #08090b; }
+                .lang-btn:not(.active) { color: var(--olx-steel); }
             `}</style>
 
-            {showNoiseTexture && (
-                <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: NOISE_BG, opacity: 0.045, mixBlendMode: "overlay", pointerEvents: "none", zIndex: 0 }} />
-            )}
+            <div aria-hidden="true" style={{ position: "absolute", inset: 0, backgroundImage: NOISE_BG, opacity: 0.045, mixBlendMode: "overlay", pointerEvents: "none", zIndex: 0 }} />
 
-            {/* ============ HERO ============ */}
-            <section style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "clamp(28px,5vw,56px) clamp(24px,5vw,64px) clamp(70px,9vw,120px)" }}>
-                <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }} style={{ marginBottom: "clamp(56px,9vw,100px)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <div className="olx-display" style={{ display: "flex", alignItems: "center", gap: 9, fontWeight: 700, fontSize: 17, letterSpacing: "0.01em" }}>
-                        <TargetMark size={22} color="var(--olx-signal)" />
-                        OLEMAX SYSTEMS
-                    </div>
-                    <nav style={{ display: "flex", gap: "24px", fontSize: "14px", fontFamily: "'IBM Plex Mono', monospace" }}>
-                        <a href="#olx-solutions" style={{ color: "var(--olx-steel)" }}>Рішення</a>
-                        <a href="#contact" style={{ color: "var(--olx-steel)" }}>Контакти</a>
+            {/* SHARED HEADER + LANGUAGE SWITCHER */}
+            <header style={{ position: "relative", zIndex: 10, maxWidth: 1360, margin: "0 auto", padding: "32px clamp(24px,5vw,64px)", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div className="olx-display" style={{ display: "flex", alignItems: "center", gap: 10, fontWeight: 700, fontSize: 18 }}>
+                    <TargetMark size={24} color="var(--olx-signal)" />
+                    OLEMAX SYSTEMS
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: 32 }}>
+                    <nav style={{ display: "flex", gap: 24, fontSize: 14, fontFamily: "'IBM Plex Mono', monospace" }}>
+                        <a href="#olx-solutions" style={{ color: "var(--olx-steel)", transition: "color 0.2s" }}>{t.nav.solutions}</a>
+                        <a href="#contact" style={{ color: "var(--olx-steel)", transition: "color 0.2s" }}>{t.nav.contact}</a>
                     </nav>
-                </motion.div>
 
-                <div className="olx-grid">
-                    <motion.div variants={staggerContainer} initial="hidden" animate="show">
-                        <motion.p variants={staggerItem} className="olx-eyebrow">
-                            <TargetMark size={13} color="var(--olx-signal)" />
-                            ІННОВАЦІЇ В GNSS ТА РАДІОЕЛЕКТРОНІЦІ
-                        </motion.p>
+                    {/* Перемикач мов */}
+                    <div style={{ display: "flex", backgroundColor: "rgba(255,255,255,0.04)", padding: 4, borderRadius: 8, border: "1px solid var(--olx-hairline)" }}>
+                        <button onClick={() => setLang("UA")} className={`lang-btn ${lang === "UA" ? "active" : ""}`}>UA</button>
+                        <button onClick={() => setLang("EN")} className={`lang-btn ${lang === "EN" ? "active" : ""}`}>EN</button>
+                    </div>
+                </div>
+            </header>
 
-                        <motion.h1 variants={staggerItem} className="olx-display" style={{ fontSize: "clamp(34px, 4.6vw, 60px)", fontWeight: 700, lineHeight: 1.08, letterSpacing: "-0.02em", margin: "0 0 22px" }}>
-                            Точність, яка <span style={{ color: "var(--olx-signal)" }}>не залежить від перешкод</span>
-                        </motion.h1>
+            <AnimatePresence mode="wait">
+                <motion.div
+                    key={lang}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    {/* HERO SECTION */}
+                    <section style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "40px clamp(24px,5vw,64px) 100px" }}>
+                        <div className="olx-grid">
+                            <div>
+                                <p className="olx-eyebrow"><TargetMark size={13} color="var(--olx-signal)" /> {t.hero.eyebrow}</p>
+                                <h1 className="olx-display" style={{ fontSize: "clamp(34px, 4.6vw, 60px)", fontWeight: 700, lineHeight: 1.08, margin: "0 0 22px" }}>
+                                    {t.hero.titleStart} <span style={{ color: "var(--olx-signal)" }}>{t.hero.titleAccent}</span>
+                                </h1>
+                                <p style={{ fontSize: "17px", lineHeight: 1.65, color: "var(--olx-steel)", maxWidth: 520, margin: "0 0 36px" }}>{t.hero.sub}</p>
 
-                        <motion.p variants={staggerItem} style={{ fontSize: "clamp(15.5px,1.4vw,18px)", lineHeight: 1.65, color: "var(--olx-steel)", maxWidth: 520, margin: "0 0 36px" }}>
-                            Ми розробляємо GNSS-антени та радіочастотні системи, які зберігають стабільний сигнал навіть у найскладніших умовах. Обладнання, якому довіряють в авіації, обороні та промисловості.
-                        </motion.p>
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 14, marginBottom: 40 }}>
+                                    <a href="#olx-solutions" className="olx-btn-primary">{t.hero.btn1} <ArrowIcon /></a>
+                                    <a href="#contact" className="olx-btn-secondary">{t.hero.btn2}</a>
+                                </div>
 
-                        <motion.div variants={staggerItem} style={{ display: "flex", flexWrap: "wrap", gap: 14, marginBottom: 40 }}>
-                            <a href="#olx-solutions" className="olx-btn-primary">
-                                Переглянути рішення <ArrowIcon />
-                            </a>
-                            <a href="#contact" className="olx-btn-secondary">
-                                Зв’язатися з нами
-                            </a>
-                        </motion.div>
-
-                        <motion.div variants={staggerItem} className="olx-badge-row">
-                            {["GPS", "GLONASS", "GALILEO", "BEIDOU", "QZSS", "SBAS"].map((badge, i) => (
-                                <span key={i} className="olx-badge">{badge}</span>
-                            ))}
-                        </motion.div>
-                    </motion.div>
-
-                    <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.9, ease: easeOut, delay: 0.15 }} style={{ position: "relative" }}>
-                        <div style={{ position: "relative", padding: 16 }}>
-                            <div style={{ position: "relative", zIndex: 1, borderRadius: 18, overflow: "hidden", border: "1px solid var(--olx-hairline)" }}>
-                                <img
-                                    src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop"
-                                    alt="Обладнання OLEMAX SYSTEMS"
-                                    style={{ width: "100%", height: "auto", display: "block" }}
-                                />
+                                <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
+                                    {["GPS", "GLONASS", "GALILEO", "BEIDOU", "QZSS", "SBAS"].map((badge, i) => (
+                                        <span key={i} className="olx-badge">{badge}</span>
+                                    ))}
+                                </div>
                             </div>
 
-                            <motion.div variants={bracketContainer} initial="hidden" animate="show" aria-hidden="true" style={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
-                                <motion.div variants={bracketItem} style={{ position: "absolute", inset: 0 }}><CornerBracket corner="tl" /></motion.div>
-                                <motion.div variants={bracketItem} style={{ position: "absolute", inset: 0 }}><CornerBracket corner="tr" /></motion.div>
-                                <motion.div variants={bracketItem} style={{ position: "absolute", inset: 0 }}><CornerBracket corner="bl" /></motion.div>
-                                <motion.div variants={bracketItem} style={{ position: "absolute", inset: 0 }}><CornerBracket corner="br" /></motion.div>
-                            </motion.div>
+                            <div style={{ position: "relative" }}>
+                                <div style={{ position: "relative", padding: 16 }}>
+                                    <div style={{ borderRadius: 18, overflow: "hidden", border: "1px solid var(--olx-hairline)" }}>
+                                        {/* Твоя оригінальна картинка апаратного забезпечення OLEMAX */}
+                                        <img
+                                            src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop"
+                                            alt="OLEMAX RF Hardware"
+                                            style={{ width: "100%", display: "block" }}
+                                        />
+                                    </div>
+                                    <CornerBracket corner="tl" />
+                                    <CornerBracket corner="tr" />
+                                    <CornerBracket corner="bl" />
+                                    <CornerBracket corner="br" />
+                                </div>
+
+                                <div style={{ display: "flex", alignItems: "center", gap: 9, marginTop: 20 }}>
+                                    <motion.span
+                                        animate={shouldReduceMotion ? {} : { opacity: [1, 0.35, 1] }}
+                                        transition={{ duration: 1.6, repeat: Infinity }}
+                                        style={{ width: 7, height: 7, borderRadius: "50%", backgroundColor: "var(--olx-signal)" }}
+                                    />
+                                    <span className="olx-mono" style={{ fontSize: 12, color: "var(--olx-steel)" }}>{t.hero.lock}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* SOLUTIONS SECTION */}
+                    <section id="olx-solutions" style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "40px clamp(24px,5vw,64px) 100px" }}>
+                        <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 64px" }}>
+                            <p className="olx-eyebrow" style={{ justifyContent: "center" }}><TargetMark size={13} color="var(--olx-signal)" /> {t.solutions.eyebrow}</p>
+                            <h2 className="olx-display" style={{ fontSize: "38px", fontWeight: 700, margin: "0 0 16px" }}>{t.solutions.title}</h2>
+                            <p style={{ fontSize: 16, lineHeight: 1.65, color: "var(--olx-steel)", margin: 0 }}>{t.solutions.sub}</p>
                         </div>
 
-                        <motion.div className="olx-lock-readout" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 1.15 }}>
-                            <span className="olx-lock-dot" />
-                            <span className="olx-lock-text">СИГНАЛ ЗАФІКСОВАНО · RTK ТОЧНІСТЬ</span>
-                        </motion.div>
-                    </motion.div>
-                </div>
-            </section>
+                        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 24 }}>
+                            {t.solutions.items.map((item, i) => (
+                                <motion.div
+                                    key={i}
+                                    className="olx-card"
+                                    initial={{ opacity: 0, y: 30 }}
+                                    whileInView={{ opacity: 1, y: 0 }}
+                                    viewport={{ once: true }}
+                                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                                >
+                                    <div style={{ aspectRatio: "4/3", overflow: "hidden", backgroundColor: "#0A0A0C" }}>
+                                        <img src={item.img} alt={item.title} loading="lazy" />
+                                    </div>
+                                    <div style={{ padding: "26px 24px 28px" }}>
+                                        <h3 className="olx-display" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 10px" }}>{item.title}</h3>
+                                        <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "#9B9BA3", margin: "0 0 16px" }}>{item.desc}</p>
+                                        <a href="#contact" style={{ display: "inline-flex", alignItems: "center", gap: 6, color: "var(--olx-signal)", fontFamily: "'IBM Plex Mono', monospace", fontSize: 13 }}>
+                                            Дізнатись більше <ArrowIcon size={13} />
+                                        </a>
+                                    </div>
+                                </motion.div>
+                            ))}
+                        </div>
 
-            {/* ============ КЛЮЧОВІ РІШЕННЯ ============ */}
-            <section id="olx-solutions" style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "0 clamp(24px,5vw,64px) clamp(90px,10vw,140px)" }}>
-                <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease: easeOut }} style={{ textAlign: "center", maxWidth: 620, margin: "0 auto clamp(48px,6vw,72px)" }}>
-                    <p className="olx-eyebrow" style={{ justifyContent: "center" }}><TargetMark size={13} color="var(--olx-signal)" /> НАШІ РІШЕННЯ</p>
-                    <h2 className="olx-display" style={{ fontSize: "clamp(28px,3.6vw,42px)", fontWeight: 700, margin: "0 0 16px" }}>Що ми створюємо</h2>
-                    <p style={{ fontSize: 16.5, lineHeight: 1.65, color: "var(--olx-steel)", margin: 0 }}>
-                        Від антен до готових радіочастотних систем — кожен продукт ми проєктуємо так, щоб він працював бездоганно навіть тоді, коли умови далекі від ідеальних.
-                    </p>
-                </motion.div>
+                        <div style={{ marginTop: 64, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 22, padding: 36, borderRadius: 20, background: "linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01))", border: "1px solid var(--olx-hairline)" }}>
+                            <p className="olx-display" style={{ fontSize: 18, fontWeight: 600, margin: 0, maxWidth: 480 }}>{t.solutions.cta}</p>
+                            <a href="#contact" className="olx-btn-primary">{t.solutions.ctaBtn} <ArrowIcon /></a>
+                        </div>
+                    </section>
 
-                <div className="olx-solutions-grid">
-                    {[
-                        {
-                            title: "GNSS-антени преміум-класу",
-                            description: "Багаточастотні антени з підтримкою GPS, GLONASS, Galileo та BeiDou. Корпус витримує будь-яку погоду, а точність не падає навіть за складних умов.",
-                            img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=800&auto=format&fit=crop"
-                        },
-                        {
-                            title: "Радіочастотні системи для авіації та оборони",
-                            description: "Плати та модулі, спроєктовані за найвищими стандартами надійності — для задач, де ціна помилки надто висока, а стабільність сигналу критична.",
-                            img: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop"
-                        },
-                        {
-                            title: "Індивідуальні інженерні рішення",
-                            description: "Проєктуємо форм-фактор і конфігурацію під конкретне завдання клієнта — від першого ескізу до серійного виробництва.",
-                            img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop"
-                        }
-                    ].map((item, i) => (
-                        <motion.div key={i} className="olx-card" initial={{ opacity: 0, y: 32 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6, delay: i * 0.12, ease: easeOut }}>
-                            <div className="olx-card-image-wrap">
-                                <img src={item.img} alt={item.title} loading="lazy" />
+                    {/* CONTACTS & FORM SECTION */}
+                    <section id="contact" style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "40px clamp(24px,5vw,64px) 120px" }}>
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start", backgroundColor: "rgba(255,255,255,0.02)", padding: "48px", borderRadius: "24px", border: "1px solid var(--olx-hairline)" }}>
+                            <div>
+                                <h2 className="olx-display" style={{ fontSize: 32, fontWeight: 700, margin: "0 0 16px" }}>{t.contactSection.title}</h2>
+                                <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--olx-steel)", marginBottom: 32 }}>{t.contactSection.sub}</p>
+
+                                <div style={{ display: "flex", flexDirection: "column", gap: 16, fontFamily: "'IBM Plex Mono', monospace", fontSize: 14, color: "#E2E8F0" }}>
+                                    <div>📍 Київ, Україна (Kyiv, Ukraine)</div>
+                                    <div>✉️ <a href="mailto:info@olemax-systems.com" style={{ color: "var(--olx-signal)" }}>info@olemax-systems.com</a></div>
+                                    <div>📞 <a href="tel:+380972665157" style={{ color: "var(--olx-signal)" }}>+380 97 266 5157</a></div>
+                                </div>
                             </div>
-                            <div style={{ padding: "26px 24px 28px" }}>
-                                <h3 className="olx-display" style={{ fontSize: 19.5, fontWeight: 600, margin: "0 0 10px" }}>{item.title}</h3>
-                                <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "#9B9BA3", margin: "0 0 16px" }}>{item.description}</p>
-                                <a href="#contact" className="olx-card-link">Дізнатись більше <ArrowIcon size={13} /></a>
-                            </div>
-                        </motion.div>
-                    ))}
-                </div>
 
-                <motion.div id="contact" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }} style={{ marginTop: "clamp(48px,6vw,72px)", display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 22, padding: "clamp(28px,4vw,38px)", borderRadius: 20, background: "linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01))", border: "1px solid var(--olx-hairline)" }}>
-                    <p style={{ fontSize: 18, fontWeight: 600, margin: 0, maxWidth: 480, lineHeight: 1.4 }} className="olx-display">
-                        Маєте нестандартну задачу або проєкт, що вимагає особливої точності?
-                    </p>
-                    <a href="mailto:info@olemax-systems.com" className="olx-btn-primary">
-                        Обговорити проєкт <ArrowIcon />
-                    </a>
+                            <div>
+                                {formSubmitted ? (
+                                    <div style={{ padding: 24, backgroundColor: "rgba(16, 185, 129, 0.1)", border: "1px solid #10B981", borderRadius: 12, color: "#10B981", fontWeight: 600 }}>
+                                        {t.contactSection.success}
+                                    </div>
+                                ) : (
+                                    <form onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
+                                        <input
+                                            type="text"
+                                            placeholder={t.contactSection.formName}
+                                            required
+                                            style={{ padding: "14px 18px", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--olx-hairline)", borderRadius: 10, color: "#FFF", fontSize: 14, outline: "none" }}
+                                        />
+                                        <input
+                                            type="text"
+                                            placeholder={t.contactSection.formEmail}
+                                            required
+                                            style={{ padding: "14px 18px", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--olx-hairline)", borderRadius: 10, color: "#FFF", fontSize: 14, outline: "none" }}
+                                        />
+                                        <textarea
+                                            rows={4}
+                                            placeholder={t.contactSection.formDesc}
+                                            style={{ padding: "14px 18px", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--olx-hairline)", borderRadius: 10, color: "#FFF", fontSize: 14, outline: "none", resize: "vertical" }}
+                                        />
+                                        <button type="submit" className="olx-btn-primary" style={{ justifyContent: "center" }}>
+                                            {t.contactSection.submit} <ArrowIcon />
+                                        </button>
+                                    </form>
+                                )}
+                            </div>
+                        </div>
+                    </section>
                 </motion.div>
-            </section>
+            </AnimatePresence>
+
+            <footer style={{ maxWidth: 1360, margin: "0 auto", padding: "32px clamp(24px,5vw,64px)", borderTop: "1px solid var(--olx-hairline)", display: "flex", justifyContent: "space-between", fontSize: 13, color: "var(--olx-steel)" }}>
+                <div>© {new Date().getFullYear()} OLEMAX SYSTEMS. All rights reserved.</div>
+                <div>Kyiv, Ukraine</div>
+            </footer>
         </div>
     )
 }

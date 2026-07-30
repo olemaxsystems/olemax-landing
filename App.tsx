@@ -56,7 +56,7 @@ const easeOut: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 const content = {
     UA: {
-        nav: { solutions: "Рішення", contact: "Контакти" },
+        nav: { solutions: "Рішення", contact: "Контакт" },
         hero: {
             eyebrow: "ІННОВАЦІЇ В GNSS ТА РАДІОЕЛЕКТРОНІЦІ",
             titleStart: "Точність, яка",
@@ -79,25 +79,16 @@ const content = {
                 {
                     title: "Радіочастотні системи для авіації та оборони",
                     desc: "Плати та модулі, спроєктовані за найвищими стандартами надійності — для задач, де ціна помилки надто висока, а стабільність сигналу критична.",
-                    img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=800&auto=format&fit=crop",
+                    img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
                 },
                 {
                     title: "Індивідуальні інженерні рішення",
                     desc: "Проєктуємо форм-фактор і конфігурацію під конкретне завдання клієнта — від першого ескізу до серійного виробництва.",
-                    img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
+                    img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
                 },
             ],
             cta: "Маєте нестандартну задачу або проєкт, що вимагає особливої точності?",
             ctaBtn: "Обговорити проєкт",
-        },
-        contactSection: {
-            title: "Зв'яжіться з нашими інженерами",
-            sub: "Ми готові обговорити технічне завдання, підібрати компоненти або спроєктувати рішення під ваші вимоги.",
-            formName: "Ваше ім'я або назва компанії",
-            formEmail: "Email або Telegram / телефон",
-            formDesc: "Короткий опис задачі або технічні вимоги",
-            submit: "Надіслати запит",
-            success: "Дякуємо! Наш інженер зв'яжеться з вами найближчим часом.",
         },
     },
     EN: {
@@ -124,32 +115,22 @@ const content = {
                 {
                     title: "RF Systems for Aviation & Defense",
                     desc: "Custom boards and RF modules built to the highest reliability standards — designed for mission-critical applications where signal stability is paramount.",
-                    img: "https://images.unsplash.com/photo-1555680202-c86f0e12f086?q=80&w=800&auto=format&fit=crop",
+                    img: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=800&auto=format&fit=crop",
                 },
                 {
                     title: "Custom Engineering & R&D",
                     desc: "We design custom form-factors and RF architectures tailored to your exact specifications — from initial schematics to full-scale series production.",
-                    img: "https://images.unsplash.com/photo-1581092160607-ee22621dd758?q=80&w=800&auto=format&fit=crop",
+                    img: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=800&auto=format&fit=crop",
                 },
             ],
             cta: "Have a custom challenge or project requiring extreme precision?",
             ctaBtn: "Discuss Project",
-        },
-        contactSection: {
-            title: "Connect with our engineers",
-            sub: "We are ready to discuss your technical requirements, select RF components, or design a custom solution for your needs.",
-            formName: "Your name or company",
-            formEmail: "Email or Telegram / Phone",
-            formDesc: "Brief description of the task or technical requirements",
-            submit: "Send Inquiry",
-            success: "Thank you! Our engineer will contact you shortly.",
         },
     },
 }
 
 export default function OlemaxHomepage() {
     const [lang, setLang] = React.useState<"UA" | "EN">("UA")
-    const [formSubmitted, setFormSubmitted] = React.useState(false)
     const shouldReduceMotion = useReducedMotion()
 
     const t = content[lang]
@@ -233,7 +214,6 @@ export default function OlemaxHomepage() {
                         <a href="#contact" style={{ color: "var(--olx-steel)", transition: "color 0.2s" }}>{t.nav.contact}</a>
                     </nav>
 
-                    {/* Перемикач мов */}
                     <div style={{ display: "flex", backgroundColor: "rgba(255,255,255,0.04)", padding: 4, borderRadius: 8, border: "1px solid var(--olx-hairline)" }}>
                         <button onClick={() => setLang("UA")} className={`lang-btn ${lang === "UA" ? "active" : ""}`}>UA</button>
                         <button onClick={() => setLang("EN")} className={`lang-btn ${lang === "EN" ? "active" : ""}`}>EN</button>
@@ -274,7 +254,6 @@ export default function OlemaxHomepage() {
                             <div style={{ position: "relative" }}>
                                 <div style={{ position: "relative", padding: 16 }}>
                                     <div style={{ borderRadius: 18, overflow: "hidden", border: "1px solid var(--olx-hairline)" }}>
-                                        {/* Твоя оригінальна картинка апаратного забезпечення OLEMAX */}
                                         <img
                                             src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop"
                                             alt="OLEMAX RF Hardware"
@@ -300,7 +279,7 @@ export default function OlemaxHomepage() {
                     </section>
 
                     {/* SOLUTIONS SECTION */}
-                    <section id="olx-solutions" style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "40px clamp(24px,5vw,64px) 100px" }}>
+                    <section id="olx-solutions" style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "40px clamp(24px,5vw,64px) 120px" }}>
                         <div style={{ textAlign: "center", maxWidth: 620, margin: "0 auto 64px" }}>
                             <p className="olx-eyebrow" style={{ justifyContent: "center" }}><TargetMark size={13} color="var(--olx-signal)" /> {t.solutions.eyebrow}</p>
                             <h2 className="olx-display" style={{ fontSize: "38px", fontWeight: 700, margin: "0 0 16px" }}>{t.solutions.title}</h2>
@@ -331,56 +310,10 @@ export default function OlemaxHomepage() {
                             ))}
                         </div>
 
-                        <div style={{ marginTop: 64, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 22, padding: 36, borderRadius: 20, background: "linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01))", border: "1px solid var(--olx-hairline)" }}>
+                        {/* Твій оригінальний компактний блок CTA */}
+                        <div id="contact" style={{ marginTop: 64, display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "space-between", gap: 22, padding: 36, borderRadius: 20, background: "linear-gradient(135deg, rgba(255,255,255,0.035), rgba(255,255,255,0.01))", border: "1px solid var(--olx-hairline)" }}>
                             <p className="olx-display" style={{ fontSize: 18, fontWeight: 600, margin: 0, maxWidth: 480 }}>{t.solutions.cta}</p>
-                            <a href="#contact" className="olx-btn-primary">{t.solutions.ctaBtn} <ArrowIcon /></a>
-                        </div>
-                    </section>
-
-                    {/* CONTACTS & FORM SECTION */}
-                    <section id="contact" style={{ position: "relative", zIndex: 1, maxWidth: 1360, margin: "0 auto", padding: "40px clamp(24px,5vw,64px) 120px" }}>
-                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 60, alignItems: "start", backgroundColor: "rgba(255,255,255,0.02)", padding: "48px", borderRadius: "24px", border: "1px solid var(--olx-hairline)" }}>
-                            <div>
-                                <h2 className="olx-display" style={{ fontSize: 32, fontWeight: 700, margin: "0 0 16px" }}>{t.contactSection.title}</h2>
-                                <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--olx-steel)", marginBottom: 32 }}>{t.contactSection.sub}</p>
-
-                                <div style={{ display: "flex", flexDirection: "column", gap: 16, fontFamily: "'IBM Plex Mono', monospace", fontSize: 14, color: "#E2E8F0" }}>
-                                    <div>📍 Київ, Україна (Kyiv, Ukraine)</div>
-                                    <div>✉️ <a href="mailto:info@olemax-systems.com" style={{ color: "var(--olx-signal)" }}>info@olemax-systems.com</a></div>
-                                    <div>📞 <a href="tel:+380972665157" style={{ color: "var(--olx-signal)" }}>+380 97 266 5157</a></div>
-                                </div>
-                            </div>
-
-                            <div>
-                                {formSubmitted ? (
-                                    <div style={{ padding: 24, backgroundColor: "rgba(16, 185, 129, 0.1)", border: "1px solid #10B981", borderRadius: 12, color: "#10B981", fontWeight: 600 }}>
-                                        {t.contactSection.success}
-                                    </div>
-                                ) : (
-                                    <form onSubmit={(e) => { e.preventDefault(); setFormSubmitted(true); }} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                                        <input
-                                            type="text"
-                                            placeholder={t.contactSection.formName}
-                                            required
-                                            style={{ padding: "14px 18px", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--olx-hairline)", borderRadius: 10, color: "#FFF", fontSize: 14, outline: "none" }}
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder={t.contactSection.formEmail}
-                                            required
-                                            style={{ padding: "14px 18px", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--olx-hairline)", borderRadius: 10, color: "#FFF", fontSize: 14, outline: "none" }}
-                                        />
-                                        <textarea
-                                            rows={4}
-                                            placeholder={t.contactSection.formDesc}
-                                            style={{ padding: "14px 18px", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid var(--olx-hairline)", borderRadius: 10, color: "#FFF", fontSize: 14, outline: "none", resize: "vertical" }}
-                                        />
-                                        <button type="submit" className="olx-btn-primary" style={{ justifyContent: "center" }}>
-                                            {t.contactSection.submit} <ArrowIcon />
-                                        </button>
-                                    </form>
-                                )}
-                            </div>
+                            <a href="mailto:info@olemax-systems.com" className="olx-btn-primary">{t.solutions.ctaBtn} <ArrowIcon /></a>
                         </div>
                     </section>
                 </motion.div>

@@ -403,12 +403,20 @@ a     { text-decoration: none; color: inherit; }
 
 /* ── Mobile drawer nav ── */
 .olx-mobile-nav {
-  position: fixed; inset: 68px 0 0 0; z-index: 99;
-  background: rgba(11,12,14,.97); backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  display: flex; flex-direction: column; align-items: stretch;
-  padding: 24px 24px 40px;
-  border-top: 1px solid rgba(255,255,255,.07);
+  position: fixed;
+  top: 68px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 100vh;
+  z-index: 999;
+  background: #0B0C0E;
+  display: flex;
+  flex-direction: column;
+  padding: 32px clamp(24px, 5vw, 48px);
+  gap: 8px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 .olx-mobile-nav a, .olx-mobile-nav button.olx-mobile-link {
   display: block; padding: 18px 0; color: #F3F4F6;

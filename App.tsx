@@ -1,10 +1,8 @@
-<ProductsSection
-        maxAImage={gurykAImg}
-        maxMImage={gurykMImg}
-        maxAPdf={gurykAPdf}
-        maxMPdf={gurykMPdf}
-        lang={lang}
-      />
+import ProductsSection from "./ProductsSection"
+import maxAImg from "./max-a.jpg" 
+import maxMImg from "./max-m.jpg"
+import maxAPdf from "./max-a-brochure.pdf"
+import maxMPdf from "./max-m-brochure.pdf"
 
 import { useState, useEffect } from "react"
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion"

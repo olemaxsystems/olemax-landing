@@ -1,8 +1,8 @@
-import ProductsSection from "./ProductsSection"
-import maxAImg from "./max-a.jpg" 
-import maxMImg from "./max-m.jpg"
-import maxAPdf from "./max-a-brochure.pdf"
-import maxMPdf from "./max-m-brochure.pdf"
+// import ProductsSection from "./ProductsSection"
+// import maxAImg from "./max-a.png" 
+// import maxMImg from "./max-m.png"
+// import maxAPdf from "./max-a-brochure.pdf"
+// import maxMPdf from "./max-m-brochure.pdf"
 
 import { useState, useEffect } from "react"
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion"
@@ -813,8 +813,9 @@ export default function App() {
         </div>
       </section>
       {/* ══════════════════════════════════════════════
-          PRODUCTS
+          PRODUCTS (Тимчасово приховано)
       ══════════════════════════════════════════════ */}
+      {/* 
       <ProductsSection
         maxAImage={maxAImg}
         maxMImage={maxMImg}
@@ -822,7 +823,7 @@ export default function App() {
         maxMPdf={maxMPdf}
         lang={lang}
       />
-
+      */}
       {/* ══════════════════════════════════════════════
           R&D
       ══════════════════════════════════════════════ */}

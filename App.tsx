@@ -47,26 +47,20 @@ function ArrowIcon({ size = 15 }: { size?: number }) {
 function HamburgerIcon({ open }: { open: boolean }) {
   return (
     <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
-      <motion.line
-        x1="3" y1="6"  x2="19" y2="6"
+      <motion.line x1="3" y1="6"  x2="19" y2="6"
         stroke="#F3F4F6" strokeWidth="1.8" strokeLinecap="round"
-        animate={open ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }}
+        animate={open ? { rotate: 45,  y: 5  } : { rotate: 0, y: 0 }}
         style={{ originX: "11px", originY: "6px" }}
-        transition={{ duration: 0.25 }}
-      />
-      <motion.line
-        x1="3" y1="11" x2="19" y2="11"
+        transition={{ duration: 0.25 }} />
+      <motion.line x1="3" y1="11" x2="19" y2="11"
         stroke="#F3F4F6" strokeWidth="1.8" strokeLinecap="round"
         animate={open ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
-        transition={{ duration: 0.2 }}
-      />
-      <motion.line
-        x1="3" y1="16" x2="19" y2="16"
+        transition={{ duration: 0.2 }} />
+      <motion.line x1="3" y1="16" x2="19" y2="16"
         stroke="#F3F4F6" strokeWidth="1.8" strokeLinecap="round"
         animate={open ? { rotate: -45, y: -5 } : { rotate: 0, y: 0 }}
         style={{ originX: "11px", originY: "16px" }}
-        transition={{ duration: 0.25 }}
-      />
+        transition={{ duration: 0.25 }} />
     </svg>
   )
 }
@@ -95,16 +89,14 @@ function HeroOsBadge({ reduced }: { reduced: boolean | null }) {
     <motion.div aria-hidden
       style={{ position: "absolute", top: "50%", left: "50%",
         transform: "translate(-50%, -50%)", zIndex: 10,
-        width: 96, height: 96, display: "flex",
-        alignItems: "center", justifyContent: "center" }}>
-      {/* Outer spinning ring */}
+        width: 96, height: 96,
+        display: "flex", alignItems: "center", justifyContent: "center" }}>
       <motion.div
         style={{ position: "absolute", inset: 0, borderRadius: "50%",
           border: "1.5px solid rgba(61,127,255,0.5)",
           borderTopColor: "rgba(61,127,255,0.12)" }}
         animate={reduced ? {} : { rotate: 360 }}
         transition={{ duration: 8, repeat: Infinity, ease: "linear" }} />
-      {/* Inner pulsing circle */}
       <motion.div
         style={{ width: 74, height: 74, borderRadius: "50%",
           background: "rgba(11,12,14,0.82)", backdropFilter: "blur(12px)",
@@ -132,22 +124,20 @@ function HeroOsBadge({ reduced }: { reduced: boolean | null }) {
 
 const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
-// Re-triggers on scroll both down AND up by using whileInView with amount threshold.
-// once: false  →  fires every time element enters the viewport.
 const fadeUp = {
   hidden: { opacity: 0, y: 28 },
-  show:   { opacity: 1, y: 0,  transition: { duration: 0.65, ease } },
-  exit:   { opacity: 0, y: -16, transition: { duration: 0.35, ease: "easeIn" } },
+  show:   { opacity: 1, y: 0,   transition: { duration: 0.65, ease } },
+  exit:   { opacity: 0, y: -16, transition: { duration: 0.35, ease: "easeIn" as const } },
 }
 const fadeLeft = {
   hidden: { opacity: 0, x: -32 },
-  show:   { opacity: 1, x: 0, transition: { duration: 0.75, ease } },
-  exit:   { opacity: 0, x: -16, transition: { duration: 0.3, ease: "easeIn" } },
+  show:   { opacity: 1, x: 0,   transition: { duration: 0.75, ease } },
+  exit:   { opacity: 0, x: -16, transition: { duration: 0.3,  ease: "easeIn" as const } },
 }
 const fadeRight = {
   hidden: { opacity: 0, x: 32 },
-  show:   { opacity: 1, x: 0, transition: { duration: 0.75, ease } },
-  exit:   { opacity: 0, x: 16, transition: { duration: 0.3, ease: "easeIn" } },
+  show:   { opacity: 1, x: 0,   transition: { duration: 0.75, ease } },
+  exit:   { opacity: 0, x: 16,  transition: { duration: 0.3,  ease: "easeIn" as const } },
 }
 const staggerContainer = {
   hidden: {},
@@ -165,6 +155,13 @@ const bracketItem = {
   hidden: { opacity: 0, scale: 1.4 },
   show:   { opacity: 1, scale: 1, transition: { duration: 0.45, ease } },
 }
+
+const inView = (amount = 0.18) => ({
+  initial: "hidden",
+  whileInView: "show",
+  exit: "exit",
+  viewport: { once: false, amount },
+})
 
 // ─────────────────────────────────────────────────────────────────────
 // CONTENT
@@ -215,7 +212,7 @@ const content = {
     },
     cta: {
       text: "Маєте нестандартну задачу або проєкт, що вимагає особливої точності?",
-      btn: "Обговорити проєкт",
+      btn:  "Обговорити проєкт",
     },
     footer: {
       copy: "© 2026 Olemax Systems", tagline: "GNSS · RF · Custom Engineering",
@@ -265,7 +262,7 @@ const content = {
     },
     cta: {
       text: "Have a non-standard task or a project that demands exceptional precision?",
-      btn: "Discuss a project",
+      btn:  "Discuss a project",
     },
     footer: {
       copy: "© 2026 Olemax Systems", tagline: "GNSS · RF · Custom Engineering",
@@ -276,27 +273,13 @@ const content = {
 
 // ─────────────────────────────────────────────────────────────────────
 // GLOBAL CSS
-// Key fixes applied:
-//   1. html/body overflow-x: hidden  →  kills horizontal scroll
-//   2. max-width: 100%  on images   →  nothing ever exceeds viewport
-//   3. Hamburger mobile nav replaces inline nav on ≤ 720px
-//   4. Hero switches to single-column at 720px (not 940) so phones
-//      never need to squeeze two columns
-//   5. Solutions cards: single col on mobile, 2-col on tablet, 3-col desktop
-//   6. Footer: stacks vertically on mobile
 // ─────────────────────────────────────────────────────────────────────
 
 const GLOBAL_CSS = `
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@500;600&display=swap');
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-/* ── ROOT OVERFLOW FIX: this is the primary fix for horizontal scroll ── */
-html, body {
-  overflow-x: hidden;
-  max-width: 100vw;
-  scroll-behavior: smooth;
-}
+html, body { overflow-x: hidden; max-width: 100vw; scroll-behavior: smooth; }
 body  { background: #0B0C0E; color: #F3F4F6; }
 img   { max-width: 100%; height: auto; }
 a     { text-decoration: none; color: inherit; }
@@ -305,7 +288,7 @@ a     { text-decoration: none; color: inherit; }
 .olx-display { font-family: 'Space Grotesk', 'Inter', sans-serif; }
 .olx-mono    { font-family: 'IBM Plex Mono', ui-monospace, monospace; }
 
-/* ── Eyebrow label ── */
+/* ── Eyebrow ── */
 .olx-eyebrow {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: 'IBM Plex Mono', ui-monospace, monospace;
@@ -323,18 +306,15 @@ a     { text-decoration: none; color: inherit; }
               background .25s ease, border-color .25s ease;
 }
 .olx-btn-primary  { background: #3D7FFF; color: #08090b; }
-.olx-btn-primary:hover  { transform: translateY(-2px); filter: brightness(1.09);
+.olx-btn-primary:hover { transform: translateY(-2px); filter: brightness(1.09);
   box-shadow: 0 12px 28px rgba(61,127,255,.35); }
 .olx-btn-primary svg { transition: transform .25s ease; }
 .olx-btn-primary:hover svg { transform: translateX(3px); }
-.olx-btn-secondary { background: transparent; color: #F3F4F6;
-  border-color: rgba(255,255,255,.12); }
+.olx-btn-secondary { background: transparent; color: #F3F4F6; border-color: rgba(255,255,255,.12); }
 .olx-btn-secondary:hover { background: rgba(255,255,255,.06);
   border-color: rgba(255,255,255,.28); transform: translateY(-2px); }
 .olx-btn-primary:focus-visible,
 .olx-btn-secondary:focus-visible { outline: 2px solid #3D7FFF; outline-offset: 3px; }
-
-/* Mobile: full-width buttons */
 @media (max-width: 480px) {
   .olx-btn-primary, .olx-btn-secondary {
     width: 100%; justify-content: center; font-size: 14px; padding: 13px 20px;
@@ -360,48 +340,90 @@ a     { text-decoration: none; color: inherit; }
   font-size: 11px; letter-spacing: .05em; color: #8B909A;
 }
 
-/* ── Sticky header ── */
+/* ════════════════════════════════════════════════
+   HEADER  —  ключовий фікс
+   
+   Стратегія: header-inner має ТІЛЬКИ двох flex-дітей:
+     1) логотип (зліва)
+     2) .olx-nav-right (справа) — один контейнер,
+        який всередині себе перемикається між
+        desktop-nav та mobile-controls за допомогою
+        display:flex / display:none.
+   Таким чином space-between завжди ділить простір
+   рівно між двома елементами і ніщо не з'їжджає.
+════════════════════════════════════════════════ */
 .olx-header {
   position: sticky; top: 0; z-index: 100;
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-  background: rgba(11,12,14,.80); border-bottom: 1px solid rgba(255,255,255,.07);
+  background: rgba(11,12,14,.80);
+  border-bottom: 1px solid rgba(255,255,255,.07);
 }
 .olx-header-inner {
   max-width: 1360px; margin: 0 auto;
   padding: 0 clamp(20px,5vw,64px);
-  display: flex; align-items: center; justify-content: space-between; height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
 }
 
-/* ── Desktop nav ── */
-.olx-desktop-nav { display: flex; align-items: center; gap: 28px; }
+/* Right slot — wraps everything on the right side */
+.olx-nav-right {
+  display: flex;
+  align-items: center;
+  gap: 0;                /* children control their own spacing */
+}
+
+/* Desktop nav links + lang switcher */
+.olx-desktop-nav {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
 .olx-nav-link {
-  font-family: 'Inter', sans-serif; font-size: 14.5px; color: #8B909A;
-  transition: color .2s; cursor: pointer;
+  font-family: 'Inter', sans-serif; font-size: 14.5px;
+  color: #8B909A; transition: color .2s; cursor: pointer;
 }
 .olx-nav-link:hover { color: #F3F4F6; }
 
-/* ── Lang switcher ── */
+/* Lang switcher pill */
+.olx-lang-pill {
+  display: flex; gap: 3px; margin-left: 20px;
+  padding: 3px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: rgba(255,255,255,.025);
+}
 .olx-lang-btn {
   font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12px;
   font-weight: 600; letter-spacing: .06em; padding: 5px 11px; border-radius: 6px;
   cursor: pointer; border: 1px solid transparent; background: transparent;
   color: #8B909A; transition: all .2s ease;
 }
-.olx-lang-btn.active { background: rgba(61,127,255,.15); border-color: rgba(61,127,255,.4); color: #3D7FFF; }
+.olx-lang-btn.active {
+  background: rgba(61,127,255,.15); border-color: rgba(61,127,255,.4); color: #3D7FFF;
+}
 .olx-lang-btn:hover:not(.active) { color: #F3F4F6; }
 
-/* ── Hamburger button (mobile only) ── */
-.olx-hamburger {
-  display: none; align-items: center; justify-content: center;
-  background: transparent; border: none; cursor: pointer; padding: 6px;
-  border-radius: 8px; color: #F3F4F6;
+/* Mobile controls: lang pill + hamburger
+   — hidden on desktop, shown on mobile */
+.olx-mobile-controls {
+  display: none;
+  align-items: center;
+  gap: 8px;
 }
-@media (max-width: 720px) {
-  .olx-desktop-nav { display: none; }
-  .olx-hamburger   { display: flex; }
+.olx-hamburger {
+  display: flex; align-items: center; justify-content: center;
+  background: transparent; border: none; cursor: pointer;
+  padding: 6px; border-radius: 8px; color: #F3F4F6;
 }
 
-/* ── Mobile drawer nav ── */
+@media (max-width: 720px) {
+  /* Hide desktop nav, show mobile controls */
+  .olx-desktop-nav     { display: none; }
+  .olx-mobile-controls { display: flex; }
+}
+
+/* ── Mobile drawer ── */
 .olx-mobile-nav {
   position: fixed;
   top: 68px;
@@ -413,29 +435,28 @@ a     { text-decoration: none; color: inherit; }
   background: #0B0C0E;
   display: flex;
   flex-direction: column;
-  padding: 32px clamp(24px, 5vw, 48px);
-  gap: 8px;
+  align-items: stretch;
+  padding: 28px 28px 48px;
+  border-top: 1px solid rgba(255,255,255,.07);
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
 }
-.olx-mobile-nav a, .olx-mobile-nav button.olx-mobile-link {
+.olx-mobile-nav a {
   display: block; padding: 18px 0; color: #F3F4F6;
   font-family: 'Space Grotesk', sans-serif; font-size: 22px; font-weight: 600;
   letter-spacing: -.01em; text-align: left;
-  border: none; background: transparent; cursor: pointer;
   border-bottom: 1px solid rgba(255,255,255,.06);
   transition: color .2s;
 }
-.olx-mobile-nav a:hover, .olx-mobile-nav button.olx-mobile-link:hover { color: #3D7FFF; }
-.olx-mobile-lang { display: flex; gap: 10px; margin-top: 28px; }
-
-/* ── Section wrapper ── */
-.olx-section {
-  max-width: 1360px; margin: 0 auto;
-  padding: 0 clamp(20px,5vw,64px);
+.olx-mobile-nav a:hover { color: #3D7FFF; }
+.olx-mobile-nav .olx-mobile-email {
+  color: #3D7FFF; margin-top: 8px; font-size: 18px;
 }
 
-/* ── Hero layout ── */
+/* ── Section wrapper ── */
+.olx-section { max-width: 1360px; margin: 0 auto; padding: 0 clamp(20px,5vw,64px); }
+
+/* ── Hero ── */
 .olx-hero-grid {
   display: grid; grid-template-columns: 1fr 0.82fr;
   gap: 60px; align-items: center;
@@ -444,25 +465,25 @@ a     { text-decoration: none; color: inherit; }
   .olx-hero-grid { grid-template-columns: 1fr; gap: 40px; }
 }
 
-/* ── Solutions grid ── */
+/* ── Solutions ── */
 .olx-solutions-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px;
 }
-@media (max-width: 900px) {
-  .olx-solutions-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 560px) {
-  .olx-solutions-grid { grid-template-columns: 1fr; gap: 16px; }
-}
+@media (max-width: 900px) { .olx-solutions-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 560px) { .olx-solutions-grid { grid-template-columns: 1fr; gap: 16px; } }
 
-/* ── Solution card ── */
+/* ── Card ── */
 .olx-card {
-  display: block; background: #111317; border: 1px solid rgba(255,255,255,.09);
+  display: block; background: #111317;
+  border: 1px solid rgba(255,255,255,.09);
   border-radius: 18px; overflow: hidden;
   transition: border-color .3s ease, box-shadow .3s ease, transform .3s ease;
 }
-.olx-card:hover { border-color: rgba(61,127,255,.45);
-  box-shadow: 0 22px 44px rgba(0,0,0,.45); transform: translateY(-4px); }
+.olx-card:hover {
+  border-color: rgba(61,127,255,.45);
+  box-shadow: 0 22px 44px rgba(0,0,0,.45);
+  transform: translateY(-4px);
+}
 .olx-card-image-wrap {
   position: relative; aspect-ratio: 4/3; overflow: hidden; background: #0A0A0C;
 }
@@ -473,15 +494,16 @@ a     { text-decoration: none; color: inherit; }
 .olx-card:hover .olx-card-image-wrap img { transform: scale(1.07); }
 .olx-card-link {
   display: inline-flex; align-items: center; gap: 6px; color: #3D7FFF;
-  font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: 12.5px; font-weight: 500;
-  margin-top: 4px; letter-spacing: .02em;
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+  font-size: 12.5px; font-weight: 500; margin-top: 4px; letter-spacing: .02em;
 }
 .olx-card-link svg { transition: transform .25s ease; }
 .olx-card:hover .olx-card-link svg { transform: translateX(4px); }
 
 /* ── R&D grid ── */
 .olx-rd-grid {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 28px; align-items: start;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 28px; align-items: start;
 }
 @media (max-width: 780px) { .olx-rd-grid { grid-template-columns: 1fr; } }
 
@@ -493,12 +515,12 @@ a     { text-decoration: none; color: inherit; }
 }
 .olx-logo-plaque img { width: 28px; height: 28px; object-fit: contain; display: block; }
 
-/* ── CTA banner ── */
+/* ── CTA ── */
 .olx-cta-banner {
   display: flex; flex-wrap: wrap; align-items: center;
   justify-content: space-between; gap: 22px;
   padding: clamp(24px,4vw,38px); border-radius: 20px;
-  background: linear-gradient(135deg, rgba(255,255,255,.038), rgba(255,255,255,.01));
+  background: linear-gradient(135deg,rgba(255,255,255,.038),rgba(255,255,255,.01));
   border: 1px solid rgba(255,255,255,.09);
 }
 @media (max-width: 560px) {
@@ -512,54 +534,28 @@ a     { text-decoration: none; color: inherit; }
   justify-content: space-between; gap: 16px;
 }
 @media (max-width: 600px) {
-  .olx-footer-inner {
-    flex-direction: column; align-items: flex-start; gap: 10px;
-  }
+  .olx-footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
 }
 
-@media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 `
-
-// ─────────────────────────────────────────────────────────────────────
-// SCROLL ANIMATION NOTE
-//
-// We use `once: false` on all whileInView calls so animations replay
-// every time an element re-enters the viewport (scroll up / down).
-// The `amount` threshold (0.15–0.25) means the animation triggers as
-// soon as 15-25 % of the element is visible — feels snappy on mobile.
-// Exit animations are encoded in variants but framer only plays them
-// when the element leaves the viewport IF exitWhileNotInView is set.
-// We pass `exit` prop on individual motion.divs for that.
-// ─────────────────────────────────────────────────────────────────────
-
-// Re-usable whileInView props factory
-const inView = (amount = 0.18) => ({
-  initial: "hidden",
-  whileInView: "show",
-  exit: "exit",
-  viewport: { once: false, amount },
-})
 
 // ─────────────────────────────────────────────────────────────────────
 // APP
 // ─────────────────────────────────────────────────────────────────────
 
 export default function App() {
-  const [lang, setLang]       = useState<"ua" | "en">("ua")
-  const [menuOpen, setMenu]   = useState(false)
+  const [lang, setLang]     = useState<"ua" | "en">("ua")
+  const [menuOpen, setMenu] = useState(false)
   const t       = content[lang]
   const reduced = useReducedMotion()
 
-  // Close mobile menu on resize to desktop
   useEffect(() => {
     const close = () => { if (window.innerWidth > 720) setMenu(false) }
     window.addEventListener("resize", close)
     return () => window.removeEventListener("resize", close)
   }, [])
 
-  // Prevent body scroll when drawer is open
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : ""
     return () => { document.body.style.overflow = "" }
@@ -574,17 +570,33 @@ export default function App() {
     }
   }
 
+  /* Shared lang pill — rendered in both desktop nav and mobile controls */
+  const LangPill = () => (
+    <div className="olx-lang-pill">
+      <button className={`olx-lang-btn${lang === "ua" ? " active" : ""}`}
+        onClick={() => setLang("ua")}>UA</button>
+      <button className={`olx-lang-btn${lang === "en" ? " active" : ""}`}
+        onClick={() => setLang("en")}>EN</button>
+    </div>
+  )
+
   return (
     <>
       <style>{GLOBAL_CSS}</style>
 
       {/* ══════════════════════════════════════════════
           HEADER
+          Structure:
+            .olx-header-inner
+              ├─ logo (motion.div)          ← flex child 1
+              └─ .olx-nav-right             ← flex child 2
+                    ├─ .olx-desktop-nav  (desktop only, hidden ≤720px)
+                    └─ .olx-mobile-controls (mobile only, hidden >720px)
       ══════════════════════════════════════════════ */}
       <header className="olx-header">
         <div className="olx-header-inner">
 
-          {/* Logo */}
+          {/* ── Flex child 1: Logo ── */}
           <motion.div
             style={{ display: "flex", alignItems: "center", gap: 10, cursor: "default" }}
             whileHover={reduced ? {} : {
@@ -601,50 +613,43 @@ export default function App() {
             </span>
           </motion.div>
 
-          {/* Desktop nav */}
-          <nav className="olx-desktop-nav">
-            <a href="#solutions" className="olx-nav-link">{t.nav.solutions}</a>
-            <a href="#rd"        className="olx-nav-link">{t.nav.rd}</a>
-            <a href="#contact"   className="olx-nav-link">{t.nav.contact}</a>
-            <div style={{ display: "flex", gap: 3, marginLeft: 4,
-                padding: "3px", borderRadius: 8,
-                border: "1px solid rgba(255,255,255,.08)",
-                background: "rgba(255,255,255,.025)" }}>
-              <button className={`olx-lang-btn${lang === "ua" ? " active" : ""}`}
-                onClick={() => setLang("ua")}>UA</button>
-              <button className={`olx-lang-btn${lang === "en" ? " active" : ""}`}
-                onClick={() => setLang("en")}>EN</button>
-            </div>
-          </nav>
+          {/* ── Flex child 2: right-side nav slot ── */}
+          <div className="olx-nav-right">
 
-          {/* Hamburger (mobile only) */}
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            {/* Lang switcher always visible on mobile */}
-            <div style={{ display: "flex", gap: 2 }} className="olx-mobile-lang-header">
-              <button className={`olx-lang-btn${lang === "ua" ? " active" : ""}`}
-                onClick={() => setLang("ua")}>UA</button>
-              <button className={`olx-lang-btn${lang === "en" ? " active" : ""}`}
-                onClick={() => setLang("en")}>EN</button>
+            {/* Desktop: links + lang pill */}
+            <nav className="olx-desktop-nav">
+              <a href="#solutions" className="olx-nav-link">{t.nav.solutions}</a>
+              <a href="#rd"        className="olx-nav-link">{t.nav.rd}</a>
+              <a href="#contact"   className="olx-nav-link">{t.nav.contact}</a>
+              <LangPill />
+            </nav>
+
+            {/* Mobile: lang pill + hamburger */}
+            <div className="olx-mobile-controls">
+              <LangPill />
+              <button className="olx-hamburger" aria-label="Меню"
+                onClick={() => setMenu((v) => !v)}>
+                <HamburgerIcon open={menuOpen} />
+              </button>
             </div>
-            <button className="olx-hamburger" aria-label="Menu"
-              onClick={() => setMenu((v) => !v)}>
-              <HamburgerIcon open={menuOpen} />
-            </button>
+
           </div>
         </div>
 
-        {/* Mobile drawer */}
+        {/* ── Mobile drawer ── */}
         <AnimatePresence>
           {menuOpen && (
             <motion.nav className="olx-mobile-nav"
-              initial={{ opacity: 0, y: -16 }} animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -16 }} transition={{ duration: 0.28, ease }}>
-              <a onClick={() => closeMenu("solutions")} href="#solutions">{t.nav.solutions}</a>
-              <a onClick={() => closeMenu("rd")}        href="#rd">{t.nav.rd}</a>
-              <a onClick={() => closeMenu("contact")}   href="#contact">{t.nav.contact}</a>
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -12 }}
+              transition={{ duration: 0.26, ease }}>
+              <a href="#solutions" onClick={() => closeMenu("solutions")}>{t.nav.solutions}</a>
+              <a href="#rd"        onClick={() => closeMenu("rd")}>{t.nav.rd}</a>
+              <a href="#contact"   onClick={() => closeMenu("contact")}>{t.nav.contact}</a>
               <a href="mailto:info@olemax-systems.com"
-                onClick={() => setMenu(false)}
-                style={{ color: "#3D7FFF", marginTop: 8 }}>
+                className="olx-mobile-email"
+                onClick={() => setMenu(false)}>
                 info@olemax-systems.com
               </a>
             </motion.nav>
@@ -705,7 +710,8 @@ export default function App() {
 
             {/* Visual column */}
             <motion.div initial={{ opacity: 0, scale: .95 }} animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: .9, ease, delay: .2 }} style={{ position: "relative" }}>
+              transition={{ duration: .9, ease, delay: .2 }}
+              style={{ position: "relative" }}>
 
               <motion.div aria-hidden
                 style={{ position: "absolute", inset: "8%",
@@ -757,8 +763,6 @@ export default function App() {
       ══════════════════════════════════════════════ */}
       <section id="solutions" style={{ paddingBottom: "clamp(72px,10vw,140px)" }}>
         <div className="olx-section">
-
-          {/* Heading */}
           <motion.div variants={fadeUp} {...inView(0.2)}
             style={{ textAlign: "center", maxWidth: 620,
               margin: "0 auto clamp(40px,6vw,70px)" }}>
@@ -776,7 +780,6 @@ export default function App() {
             </p>
           </motion.div>
 
-          {/* Cards */}
           <div className="olx-solutions-grid">
             {t.solutions.cards.map((card, i) => (
               <motion.a key={i} href="#" className="olx-card"
@@ -791,8 +794,7 @@ export default function App() {
                       lineHeight: 1.3, marginBottom: 10 }}>
                     {card.title}
                   </h3>
-                  <p style={{ fontSize: 14, lineHeight: 1.6,
-                      color: "#9B9BA3", marginBottom: 14 }}>
+                  <p style={{ fontSize: 14, lineHeight: 1.6, color: "#9B9BA3", marginBottom: 14 }}>
                     {card.desc}
                   </p>
                   <span className="olx-card-link">
@@ -810,8 +812,6 @@ export default function App() {
       ══════════════════════════════════════════════ */}
       <section id="rd" style={{ paddingBottom: "clamp(72px,10vw,140px)" }}>
         <div className="olx-section">
-
-          {/* Heading */}
           <motion.div variants={fadeUp} {...inView(0.15)}
             style={{ marginBottom: "clamp(36px,5vw,56px)" }}>
             <p className="olx-eyebrow">
@@ -820,8 +820,7 @@ export default function App() {
             </p>
             <h2 className="olx-display"
               style={{ fontSize: "clamp(26px,3.8vw,46px)", fontWeight: 700,
-                lineHeight: 1.12, letterSpacing: "-.02em",
-                marginBottom: 14, maxWidth: 700 }}>
+                lineHeight: 1.12, letterSpacing: "-.02em", marginBottom: 14, maxWidth: 700 }}>
               {t.rd.title}
             </h2>
             <p style={{ fontSize: "clamp(15px,1.3vw,16.5px)", lineHeight: 1.65,
@@ -832,8 +831,7 @@ export default function App() {
 
           <div className="olx-rd-grid">
             {/* Left — big photo */}
-            <motion.div variants={fadeLeft} {...inView(0.15)}
-              style={{ position: "relative" }}>
+            <motion.div variants={fadeLeft} {...inView(0.15)} style={{ position: "relative" }}>
               <img src={IMG_RD} alt="RF Lab board traces"
                 style={{ width: "100%", aspectRatio: "1/1", objectFit: "cover",
                   borderRadius: 18, display: "block",
@@ -861,8 +859,7 @@ export default function App() {
                     border: "1px solid rgba(255,255,255,.09)",
                     borderRadius: 16, padding: "clamp(18px,3vw,26px)" }}>
                   <h3 className="olx-display"
-                    style={{ fontSize: "clamp(16px,1.4vw,19px)", fontWeight: 600,
-                      marginBottom: 8 }}>
+                    style={{ fontSize: "clamp(16px,1.4vw,19px)", fontWeight: 600, marginBottom: 8 }}>
                     {item.title}
                   </h3>
                   <p style={{ fontSize: 14, lineHeight: 1.6, color: "#8B909A" }}>
@@ -910,15 +907,13 @@ export default function App() {
             </span>
             <div style={{ display: "flex", gap: 16, flexWrap: "wrap", alignItems: "center" }}>
               <a href={`mailto:${t.footer.email}`} className="olx-mono"
-                style={{ fontSize: 12, color: "#8B909A", letterSpacing: ".02em",
-                  transition: "color .2s" }}
+                style={{ fontSize: 12, color: "#8B909A", letterSpacing: ".02em", transition: "color .2s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#F3F4F6")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#8B909A")}>
                 {t.footer.email}
               </a>
               <a href={`tel:${t.footer.phone.replace(/\s/g, "")}`} className="olx-mono"
-                style={{ fontSize: 12, color: "#8B909A", letterSpacing: ".02em",
-                  transition: "color .2s" }}
+                style={{ fontSize: 12, color: "#8B909A", letterSpacing: ".02em", transition: "color .2s" }}
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#F3F4F6")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "#8B909A")}>
                 {t.footer.phone}
@@ -931,14 +926,6 @@ export default function App() {
           </div>
         </div>
       </footer>
-
-      {/* Hide lang switcher in header row on desktop — it duplicates the desktop nav one */}
-      <style>{`
-        @media (min-width: 721px) {
-          .olx-mobile-lang-header { display: none !important; }
-          .olx-hamburger { display: none !important; }
-        }
-      `}</style>
     </>
   )
 }

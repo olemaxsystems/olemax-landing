@@ -816,10 +816,10 @@ export default function App() {
           PRODUCTS
       ══════════════════════════════════════════════ */}
       <ProductsSection
-        gurykAImage={gurykAImg}
-        gurykMImage={gurykMImg}
-        gurykAPdf={gurykAPdf}
-        gurykMPdf={gurykMPdf}
+        maxAImage={maxAImg}
+        maxMImage={maxMImg}
+        maxAPdf={maxAPdf}
+        maxMPdf={maxMPdf}
         lang={lang}
       />
 

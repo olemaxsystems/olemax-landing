@@ -14,10 +14,10 @@ interface Product {
 }
 
 interface ProductsSectionProps {
-  gurykAImage?: string
-  gurykMImage?: string
-  gurykAPdf?: string
-  gurykMPdf?: string
+  maxAImage?: string
+  maxMImage?: string
+  maxAPdf?: string
+  maxMPdf?: string
   lang?: "ua" | "en"
 }
 
@@ -195,10 +195,10 @@ function ProductModal({ product, onClose, lang }: { product: Product; onClose: (
 
 // ─── MAIN PRODUCTS SECTION ───────────────────────────────────────────
 export default function ProductsSection({
-  gurykAImage,
-  gurykMImage,
-  gurykAPdf,
-  gurykMPdf,
+  maxAImage,
+  maxMImage,
+  maxAPdf,
+  maxMPdf,
   lang = "ua",
 }: ProductsSectionProps) {
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null)
@@ -206,13 +206,13 @@ export default function ProductsSection({
   const productsData: Record<"ua" | "en", Product[]> = {
     ua: [
       {
-        id: "guryk-a",
-        name: "GURYK-A",
+        id: "max-a",
+        name: "MAX-A",
         tagline: "АВІАЦІЙНИЙ GNSS МОДУЛЬ",
         desc: "Високоточний GNSS-приймач підвищеної завадозахищеності для авіаційних систем та БПЛА. Спроєктований для стабільної навігації в умовах активного РЕБ та складного радіоелектронного оточення.",
         badges: ["RTK GPS", "Multi-Band", "Anti-Jamming", "UAV Ready"],
-        img: gurykAImage,
-        pdf: gurykAPdf,
+        img: maxAImage,
+        pdf: maxAPdf,
         specs: [
           { label: "Підтримка супутників", value: "GPS, GLONASS, Galileo, BeiDou" },
           { label: "Точність (RTK)", value: "1 cm + 1 ppm" },
@@ -222,13 +222,13 @@ export default function ProductsSection({
         ],
       },
       {
-        id: "guryk-m",
-        name: "GURYK-M",
+        id: "max-m",
+        name: "MAX-M",
         tagline: "КОМПАКТНИЙ МОДУЛЬ НАВІГАЦІЇ",
         desc: "Малогабаритний радіочастотний та GNSS модуль для мультироторних платформ і мобільних робототехнічних комплексів з оптимізованим енергоспоживанням.",
         badges: ["Compact", "Low Power", "Multi-GNSS", "High-Precision"],
-        img: gurykMImage,
-        pdf: gurykMPdf,
+        img: maxMImage,
+        pdf: maxMPdf,
         specs: [
           { label: "Форм-фактор", value: "Ультракомпактний" },
           { label: "Підтримка частот", value: "L1 / L2 / L5" },
@@ -240,13 +240,13 @@ export default function ProductsSection({
     ],
     en: [
       {
-        id: "guryk-a",
-        name: "GURYK-A",
+        id: "max-a",
+        name: "MAX-A",
         tagline: "AVIATION GNSS MODULE",
         desc: "High-precision anti-jamming GNSS receiver for aviation systems and UAVs. Engineered for reliable navigation under active EW and complex RF interference environments.",
         badges: ["RTK GPS", "Multi-Band", "Anti-Jamming", "UAV Ready"],
-        img: gurykAImage,
-        pdf: gurykAPdf,
+        img: maxAImage,
+        pdf: maxAPdf,
         specs: [
           { label: "Satellite Constellations", value: "GPS, GLONASS, Galileo, BeiDou" },
           { label: "RTK Accuracy", value: "1 cm + 1 ppm" },
@@ -256,13 +256,13 @@ export default function ProductsSection({
         ],
       },
       {
-        id: "guryk-m",
-        name: "GURYK-M",
+        id: "max-m",
+        name: "MAX-M",
         tagline: "COMPACT NAVIGATION MODULE",
         desc: "Ultra-compact RF and GNSS module for multirotor platforms and mobile robotics featuring low power consumption and high signal acquisition speed.",
         badges: ["Compact", "Low Power", "Multi-GNSS", "High-Precision"],
-        img: gurykMImage,
-        pdf: gurykMPdf,
+        img: maxMImage,
+        pdf: maxMPdf,
         specs: [
           { label: "Form Factor", value: "Ultra-compact" },
           { label: "Bands Supported", value: "L1 / L2 / L5" },
